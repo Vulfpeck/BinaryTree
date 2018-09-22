@@ -305,4 +305,86 @@ public class BinaryTree {
 
         return new ArrayList<>();
     }
+
+    private void printKDown(Node node, int k) {
+        if (node == null) {
+            return;
+        }
+
+        if (k == 0) {
+            System.out.print(node.data + ", ");
+        }
+
+        printKDown(node.left, k - 1);
+        printKDown(node.right, k - 1);
+    }
+
+    public void printKFar(int targetNode, int k) {
+        ArrayList<Node> pathList = rootToNodePathAsNodes(this.root, targetNode);
+        for (int i = 0; i < pathList.size(); i++) {
+            if (i == 0) {
+                printKDown(pathList.get(i), k);
+            } else if (i == k) {
+                printKDown(pathList.get(i), 0);
+            } else {
+                Node currentNode = pathList.get(i);
+                Node previousNode = pathList.get(i - 1);
+
+                if (currentNode.left == previousNode) {
+                    printKDown(currentNode.right, k - i - 1);
+                } else {
+                    printKDown(currentNode.left, k - i - 1);
+                }
+            }
+        }
+
+    }
+
+    private ArrayList<Node> rootToNodePathAsNodes(Node node, int target) {
+        if (node == null) {
+            return new ArrayList<>();
+        }
+
+        if (node.data == target) {
+            ArrayList<Node> pathList = new ArrayList<>();
+            pathList.add(node);
+            return pathList;
+        }
+
+        ArrayList<Node> leftPath = rootToNodePathAsNodes(node.left, target);
+        if (leftPath.size() > 0) {
+            leftPath.add(node);
+            return leftPath;
+        }
+
+        ArrayList<Node> rightPath = rootToNodePathAsNodes(node.right, target);
+        if (rightPath.size() > 0) {
+            rightPath.add(node);
+            return rightPath;
+        }
+
+        return new ArrayList<>();
+    }
+
+    public void printRootToLeafPaths() {
+        this.printRootToLeafPaths();
+    }
+
+    private void printRootToLeafPaths(Node node, int sumSoFar, String pathSoFar, int target) {
+        if (node == null) {
+            return;
+        }
+
+        if (node.left == null && node.right == null) {
+            if (sumSoFar + node.data < target) {
+                System.out.println(pathSoFar + "->" + node.data);
+            }
+            return;
+        }
+
+        printRootToLeafPaths(node.left, sumSoFar + node.data, pathSoFar + "->" + node.data, target);
+        printRootToLeafPaths(node.right, sumSoFar + node.data, pathSoFar + "-> " + node.data, target);
+    }
+
+
 }
