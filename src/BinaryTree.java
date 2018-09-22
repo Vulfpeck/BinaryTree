@@ -139,7 +139,7 @@ public class BinaryTree {
         boolean presentLeft = find(node.left, key);
         boolean presentRight = find(node.right, key);
 
-        if (presentLeft == true || presentRight == true) {
+        if (presentLeft || presentRight) {
             return true;
         }
 
