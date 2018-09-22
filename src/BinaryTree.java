@@ -386,5 +386,51 @@ public class BinaryTree {
         printRootToLeafPaths(node.right, sumSoFar + node.data, pathSoFar + "-> " + node.data, target);
     }
 
+    public int diameter() {
+        return this.diameter(this.root);
+    }
+
+    private int diameter(Node node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int leftDiameter = this.diameter(node.left);
+        int rightDiamter = this.diameter(node.right);
+
+        int leftHeight = this.height(node.left);
+        int rightHeight = this.height(node.right);
+
+        int heightThroughRoot = leftHeight + rightHeight + 2;
+
+        return Math.max((Math.max(leftDiameter, rightDiamter)), heightThroughRoot);
+    }
+
+    private class DiaPair {
+        int height;
+        int diameter;
+    }
+
+    public int diameter2() {
+        return this.diameter2(this.root).data;
+    }
+
+    private DiaPair diameter2(Node node) {
+        if (node == null) {
+            DiaPair basePair = new DiaPair() ();
+            basePair.height = -1;
+            basePair.diameter = 0;
+            return basePair;
+        }
+
+        DiaPair leftPair = this.diameter2(node.left);
+        DiaPair rightPair = this.diameter2(node.right);
+
+        DiaPair myPair = new DiaPair();
+        myPair.height = Math.max(leftPair.height, rightPair.height) + 1;
+        myPair.diameter = Math.max((leftPair.height + rightPair.height + 2), Math.max(leftPair.diameter, rightPair.diameter));
+        return myPair;
+    }
+
 
 }
