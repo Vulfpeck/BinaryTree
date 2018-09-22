@@ -412,12 +412,12 @@ public class BinaryTree {
     }
 
     public int diameter2() {
-        return this.diameter2(this.root).data;
+        return this.diameter2(this.root).height;
     }
 
     private DiaPair diameter2(Node node) {
         if (node == null) {
-            DiaPair basePair = new DiaPair() ();
+            DiaPair basePair = new DiaPair();
             basePair.height = -1;
             basePair.diameter = 0;
             return basePair;
