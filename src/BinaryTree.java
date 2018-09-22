@@ -275,4 +275,34 @@ public class BinaryTree {
         removeLeafNode(child, child.left);
         removeLeafNode(child, child.right);
     }
+
+    public ArrayList<Integer> rootToNodePath(int target) {
+        return this.rootToNodePath(this.root, target);
+    }
+
+    private ArrayList<Integer> rootToNodePath(Node node, int target) {
+        if (node == null) {
+            return new ArrayList<>();
+        }
+
+        if (node.data == target) {
+            ArrayList<Integer> path = new ArrayList<>();
+            path.add(node.data);
+            return path;
+        }
+
+        ArrayList<Integer> leftPath = this.rootToNodePath(node.left, target);
+        if (leftPath.size() > 0) {
+            leftPath.add(node.data);
+            return leftPath;
+        }
+
+        ArrayList<Integer> rightPath = this.rootToNodePath(node.right, target);
+        if (rightPath.size() > 0) {
+            rightPath.add(node.data);
+            return rightPath;
+        }
+
+        return new ArrayList<>();
+    }
 }
