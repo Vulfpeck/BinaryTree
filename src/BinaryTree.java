@@ -468,5 +468,40 @@ public class BinaryTree {
         return myPair;
     }
 
+    public void printLeftView() {
+        this.printLeftView(this.root);
+    }
+
+    private void printLeftView(Node node) {
+        ArrayList<Integer> preO = new ArrayList<>();
+        ArrayList<Integer> floorO = new ArrayList<>();
+
+        preOTraversalAsSV(node, preO, floorO, 0);
+        int[] floorCount = new int[this.size()];
+
+        System.out.println(preO);
+        System.out.println(floorO);
+
+        for (int i = 0; i < floorO.size(); i++) {
+            floorCount[floorO.get(i)] += 1;
+            if (floorCount[floorO.get(i)] == 1) {
+                System.out.print(preO.get(i) + " ");
+            }
+        }
+        System.out.println();
+    }
+
+
+    private void preOTraversalAsSV(Node node, ArrayList<Integer> preO, ArrayList<Integer> floorO, int floor) {
+        if (node == null) { // when there are no children (leaf-node), return
+            return;
+        }
+
+        // faith calls for subtrees
+        preO.add(node.data);
+        floorO.add(floor);
+        preOTraversalAsSV(node.left, preO, floorO, floor + 1);         // Left
+        preOTraversalAsSV(node.right, preO, floorO, floor + 1);        // Right
+    }
 
 }
