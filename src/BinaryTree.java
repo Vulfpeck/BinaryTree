@@ -20,6 +20,42 @@ public class BinaryTree {
         Scanner sc = new Scanner(System.in);
         this.root = this.takeInput(sc, root, false);
     }
+    
+    public BinaryTree(int[] inOrder, int[] postOrder) {
+        this.root = this.construct(inOrder, 0, inOrder.length - 1, postOrder, 0, postOrder.length - 1);
+        this.size = postOrder.length;
+    }
+
+    private Node construct(int[] inOrder, int inStartIdx, int inLastIdx, int[] postOrder, int postStartIdx, int postLastIdx) {
+        if (inStartIdx > inLastIdx || postStartIdx > postLastIdx) {
+            return null;
+        }
+
+        Node node = new Node(0, null, null);
+        node.data = postOrder[postLastIdx];  // root is the last element of postOrder array
+
+        int rootIdx = -1;       // we will keep the index of root node in inOrder array here
+        for (rootIdx = inStartIdx; rootIdx <= inLastIdx; rootIdx++) { // loop over inOrder array
+            if (postOrder[postLastIdx] == inOrder[rootIdx]) { // and search for the root node
+                break; // when found, break to store its index in rootIdx
+            }
+        }
+
+        // inside the inOrder array
+        // left side will start at inStartIdx and end at rootIdx - 1
+        // right side will start at rootIdx + 1 and end at inLastIdx
+
+        // inside the postOrder Array
+        // left side will start at postStartIdx and end at postLastIdx - numElemRight - 1
+        // right side will start at postLastIdx - numElemRight and end at postLastIdx - 1
+        int numRightElem = inLastIdx - rootIdx; // calculate the number of elements in right subtree
+        node.left = this.construct(inOrder, inStartIdx, rootIdx - 1,
+                postOrder, postStartIdx,postLastIdx - numRightElem - 1);
+        node.right = this.construct(inOrder, rootIdx + 1, inLastIdx,
+                postOrder, postLastIdx - numRightElem, postLastIdx - 1);
+
+        return node;
+    }
 
     public Node takeInput(Scanner sc, Node parent, boolean isLeftChild) {
         if (parent == null) {
