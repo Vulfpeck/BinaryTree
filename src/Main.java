@@ -7,6 +7,7 @@ public class Main {
 
         BinaryTree butter = new BinaryTree();
         butter.display();
+        //function over
 
     }
 }
