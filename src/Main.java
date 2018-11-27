@@ -6,6 +6,7 @@ public class Main {
         // 1 true 2 true 3 true 4 false false true 5 true 6 false true 7 false false true 8 true 9 true 10 false false true 11 true 12 true 14 false false true 15 false false true 13 false false true 16 true 17 false false true 18 false false true 19 false false true 20 false false
 
         BinaryTree butter = new BinaryTree();
+        BinaryTree btr = new BinaryTree();
         butter.display();
         //function over
 
